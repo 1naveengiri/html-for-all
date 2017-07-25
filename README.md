@@ -3,3 +3,5 @@ WordPress Plugin to make URL SEO specific with .html extension at the end of pag
 This plugin provide a customizable option to change .html extension of all post type. 
 
 ## Add .html extension for all post, page, CTP ## 
+
+# :construction: Work in Progress Not yet completed
