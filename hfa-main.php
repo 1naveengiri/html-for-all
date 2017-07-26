@@ -17,8 +17,11 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+// Define Plugin related Vars.
 define( 'HFA_PLUGIN_FILE',       __FILE__ );
 define( 'HFA_PLUGIN_BASENAME',   plugin_basename( __FILE__ ) );
+
+// Include addition files.
 require_once( plugin_dir_path( __FILE__ ) . 'class-html-for-all.php' );
 $instance = Html_For_All::get_instance();
 require_once( plugin_dir_path( __FILE__ ) . 'admin/class-hfa-setting.php' );
