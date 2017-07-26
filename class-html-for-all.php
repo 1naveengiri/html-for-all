@@ -28,7 +28,11 @@ class Html_For_All {
 		register_activation_hook( __FILE__, array( $this, 'hfa_active' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'hfa_deactive' ) );
 		add_filter( 'user_trailingslashit', array( $this, 'hfa_page_slash' ),66,2 );
-		// add_filter( 'post_rewrite_rules', array( $this, 'post_rewrite_rules_callback' ),99,1);
+		add_filter( 'post_link', array( $this, 'post_link_callback' ),99,3 );
+
+		add_filter( 'redirect_canonical', '__return_false' );
+		add_action( 'rewrite_rules_array', array($this, 'rewrite_rules' )) ;
+		add_filter( 'post_type_link',array($this, 'custom_post_permalink_test' ), 10, 1 ); 
 	}
 
 	/**
@@ -50,14 +54,13 @@ class Html_For_All {
 		global $wp_rewrite;
 		if ( ! strpos( $wp_rewrite->get_page_permastruct(), '.html' ) ) {
 			$wp_rewrite->page_structure = $wp_rewrite->page_structure . '.html';
-
 		}
 		$wp_rewrite->flush_rules();
 	}
 
 	function hfa_page_slash( $string, $type ) {
 		global $wp_rewrite;
-		if ( $wp_rewrite->using_permalinks() && true === $wp_rewrite->use_trailing_slashes && 'page' === $type && 'post' === $type ) {
+		if ( $wp_rewrite->using_permalinks() && true === $wp_rewrite->use_trailing_slashes && 'page' === $type ) {
 			return untrailingslashit( $string );
 		} else {
 			return $string;
@@ -84,13 +87,28 @@ class Html_For_All {
 		$wp_rewrite->flush_rules();
 	}
 
-	/**
-	 * Function to add page rewrite rules for post and CPTs
-	 */
-	function post_rewrite_rules_callback( $post_rewrite ){
-		// echo "asdsad";
-		// var_export($post_rewrite);
-		$post_rewrite->permalink_structure =  '%postname%.html';
+	function post_link_callback( $permalink, $post, $leavename ){
+		global $post;
+		$type = get_post_type( $post->ID );
+		return home_url( $post->post_name . '.html' );
+	}
+
+
+	function rewrite_rules( $rules ) {
+		$new_rules = array();
+		$post_types = get_post_types();	    
+		foreach ( $post_types as $post_type )
+			if('post' === $post_type){
+				$new_rules['([^/]+)\.html$' ] = 'index.php?post_type=' . $post_type . '&name=$matches[1]';
+			}else{
+				$new_rules[ $post_type . '/([^/]+)\.html$' ] = 'index.php?post_type=' . $post_type . '&name=$matches[1]';
+			}
+		return $new_rules + $rules;
+	}
+
+	function custom_post_permalink_test( $post_link ) {
+		global $post;
+		$type = get_post_type( $post->ID );
+		return home_url( $type . '/' . $post->post_name . '.html' );
 	}
 }
-
