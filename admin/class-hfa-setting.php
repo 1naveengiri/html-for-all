@@ -88,9 +88,7 @@ class Html_For_All_AdminSettings {
 	}
 
 	/**
-	 * Html for all setting page.
-	 *
-	 * @return html of setting page
+	 * HTML for all setting page.
 	 */
 	function hfa_settings_callback() {
 		if ( isset( $_POST['hfa_save_post_types'] ) && ! empty( $_POST['hfa_save_post_types'] ) ) {
