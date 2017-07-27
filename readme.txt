@@ -1,18 +1,18 @@
 === .html in url ===
-Contributors: witsolution
-Donate link: http://witsolution.in/
-Tags: Adds .html to pages,.html to url,.html to pages,.html to permalink,change permalink structure, html in my url,.html in my url 
-Requires at least: 3.0.1
-Tested up to: 4.5.2
-Stable tag: .html to url,.html to pages,.html to permalink,change permalink structure, html in my url, 
+Contributors: 1naveengiri
+Donate link: http://buddydevelopers.com/
+Tags: Adds .html to pages, .html to post, .html to custom post type, .html to CPT, .html to url, .html to pages, .html to permalink, change permalink structure, html in my url, .html in my url, .html for all url, .html in wordpress
+Requires at least: 1.0
+Tested up to: 4.8
+Stable tag: .html to url,.html to pages, .html to post, .html to custom post type, .html to CPT, .html to permalink, change permalink structure, html in my url, 
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-convert your url in .html easaly..
+convert your url in .html easaly for post, page, custom post type ...
 
 == Description ==
 
-Adds .html to pages.
+Adds .html to pages, post, custom post type
 1) Login your wordpress account
 
 
@@ -33,7 +33,7 @@ Just Add .html
 Now your are done add html extension in wordpress url
 Enjoy Plugin
 
-[www.witsolution.in](http://www.witsolution.in/)
+[www.buddydevelopers.com](http://www.buddydevelopers.com/)
 
 
 
