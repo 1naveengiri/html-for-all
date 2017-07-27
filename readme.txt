@@ -15,23 +15,16 @@ convert your url in .html easaly for post, page, custom post type ...
 Adds .html to pages, post, custom post type
 1) Login your wordpress account
 
+2) Activate .html for all plugin 
 
-2) Now go to settings->permalinks
+2) Now go to settings->.html For All
 
-3) Default permalink structure in wordpress see below
-/%postname%/
+3) Select the Post type you want to have .html extension in it and save them.
 
-4)Now remove trailing slash at the end of the permalink structure
-And add .html extension at the end of the permalink structure. shown below
+Thats all, Now just refresh your page, post or CPT and see the magic.
 
-EX : /%postname%/.html
-
-Just Add .html
-
-
-5)Now click on save changes button
-Now your are done add html extension in wordpress url
-Enjoy Plugin
+This Plugin closely related with rewrite rules so if anything problem seem in loading page with .html, refresh the permalink once 
+Go to settings->.permalink and update it.
 
 [www.buddydevelopers.com](http://www.buddydevelopers.com/)
 
@@ -47,22 +40,12 @@ Enjoy Plugin
 3) Login your wordpress account
 
 
-4) Now go to settings->permalinks
-
-5) Default permalink structure in wordpress see below
-/%postname%/
-
-6)Now remove trailing slash at the end of the permalink structure
-And add .html extension at the end of the permalink structure. shown below
-
-EX : /%postname%/.html  
-
-Just Add .html
+4) Now go to settings->.html For All
 
 
-7)Now click on save changes button
-Now your are done add html extension in wordpress url
-Enjoy Plugin
+Soon this plugin coming with some more feature to make .html in all WordPress URL
+
+Enjoy the feature of 1st version and support with your review and rating.
 
  
 == Frequently asked questions ==
@@ -71,23 +54,18 @@ Enjoy Plugin
 
 An answer to that question.
   
-== Screenshots ==
-
-1. Change your permalink and put this " .html " after permalink 
-2. Url Demo in [www.witsolution.in](http://www.witsolution.in/) site
-
 == Changelog ==
 
 = 1.0 =
-* html-in-url
-* Bug fix.
+* Allow to manage and change post, page, custom post type url. 
+* Provide a handle in setting to enable and disable .html for different custom post type.
   
 
 == Upgrade Notice ==
  
 
 = 1.0 = 
-crate html url
+crate html in post, page, custom post type url.  
 
 
  
