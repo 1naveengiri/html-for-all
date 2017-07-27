@@ -29,6 +29,7 @@ class Html_For_All_AdminSettings {
 	function __construct() {
 		add_filter( 'plugin_action_links_' . HFA_PLUGIN_BASENAME, array( $this, 'hfa_settings_page_link' ) );
 		add_action( 'admin_menu', array( $this, 'hfa_settings_plugin_menu' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'hfa_add_setting_style' ) );
 	}
 
 	/**
@@ -41,6 +42,13 @@ class Html_For_All_AdminSettings {
 			$instance = new Html_For_All_AdminSettings();
 		}
 		return SELF::$instance;
+	}
+
+	/**
+	 * Add style for setting form
+	 */
+	function hfa_add_setting_style() {
+		wp_enqueue_style( 'hfa_setting_style', plugins_url( 'style.css', __FILE__ ) );
 	}
 
 	/**
@@ -80,42 +88,46 @@ class Html_For_All_AdminSettings {
 	}
 
 	/**
-	 * Html for all setting page.
-	 *
-	 * @return html of setting page
+	 * HTML for all setting page.
 	 */
-	function hfa_settings_callback() { 
-			if( isset( $_POST['hfa_save_post_types'] ) && !empty( $_POST['hfa_save_post_types'] )){
-				$selected_post_type = $_POST['hfa_post_types'];
-				update_option("hfa_selected_post_type", $selected_post_type);
+	function hfa_settings_callback() {
+		if ( isset( $_POST['hfa_save_post_types'] ) && ! empty( $_POST['hfa_save_post_types'] ) ) {
+
+			$selected_post_type = array();
+			if ( isset( $_POST['hfa_post_types'] )  && ! empty( $_POST['hfa_post_types'] ) ) {
+				$selected_post_type = wp_unslash( $_POST['hfa_post_types'] );
 			}
+			update_option( 'hfa_selected_post_type', $selected_post_type );
+		}
 		?>
 		<div class='hfa_setting_containre'>
 			<div class="hfa_pluing_information">
-				<p class='hfa_info'></p>
+				<p class='hfa_info update'> In terms of SEO and ranking, there is little benefit to keeping the .html extension present in your URLs. </p>
 			</div>
 			<div class="hfa_setting_form">
 				<form method='post'>
 				<?php
-					$post_types = get_post_types();	    
-					$restricted_post_types = array('attachment', 'revision', 'nav_menu_item'); 
-					$post_types = array_diff( $post_types, $restricted_post_types);
-					if(!empty($post_types)){
-						$selected_post_type = get_option("hfa_selected_post_type");
-						echo "<ul  class='post_types_lists'>";
-						foreach ( $post_types as $post_type ){
-							$checked = '';
-							if( !empty( $selected_post_type ) && in_array($post_type, $selected_post_type )){
-								$checked = 'checked';
-							}
-							echo "<li>";
-								echo '<input type="checkbox" '.$checked.' name="hfa_post_types[ ]" value="'.$post_type.'">';
-								echo "<label>".$post_type."</Label>";
-							echo "</li>";
-						}		
-						echo '<li> <input type="submit" name="hfa_save_post_types" value="Save"> </li>';
-						echo "</ul>";
+					$post_types = get_post_types();
+					$restricted_post_types = array( 'attachment', 'revision', 'nav_menu_item' );
+					$post_types = array_diff( $post_types, $restricted_post_types );
+				if ( ! empty( $post_types ) ) {
+					$selected_post_type = get_option( 'hfa_selected_post_type' );
+					echo "<ul  class='post_types_lists'>";
+					foreach ( $post_types as $post_type ) {
+						$checked = '';
+						if ( ! empty( $selected_post_type ) && in_array( $post_type, $selected_post_type ) ) {
+							$checked = 'checked';
+						}
+						$post_type_name = strtoupper( $post_type );
+						$post_type_name = str_replace( '_', ' ', $post_type_name );
+						echo '<li>';
+							echo '<input type="checkbox" ' . esc_html( $checked ) . ' name="hfa_post_types[ ]" value="' . esc_html( $post_type ) . '">';
+							echo '<label>' . esc_html( $post_type_name ) . '</Label>';
+						echo '</li>';
 					}
+					echo '<li> <input type="submit" name="hfa_save_post_types" class="button  button-primary button-large" value="Save"> </li>';
+					echo '</ul>';
+				}
 				?>
 				</form>
 			</div>
