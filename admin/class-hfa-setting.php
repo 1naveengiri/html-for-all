@@ -92,10 +92,12 @@ class Html_For_All_AdminSettings {
 	 */
 	function hfa_settings_callback() {
 		if ( isset( $_POST['hfa_save_post_types'] ) && ! empty( $_POST['hfa_save_post_types'] ) ) {
-			if ( isset( $_POST['hfa_post_types'] ) && ! empty( $_POST['hfa_post_types'] ) ) {
+
+			$selected_post_type = array();
+			if ( isset( $_POST['hfa_post_types'] )  && ! empty( $_POST['hfa_post_types'] ) ) {
 				$selected_post_type = wp_unslash( $_POST['hfa_post_types'] );
-				update_option( 'hfa_selected_post_type', $selected_post_type );
 			}
+			update_option( 'hfa_selected_post_type', $selected_post_type );
 		}
 		?>
 		<div class='hfa_setting_containre'>
