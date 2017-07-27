@@ -1,0 +1,14 @@
+.hfa_setting_containre{
+	padding: 10px;
+}
+
+.hfa_setting_containre .hfa_setting_form{
+	padding: 10px;
+	border: 4px solid #ccc;
+}
+
+.hfa_setting_containre .hfa_pluing_information {
+	border: 1px solid #ccc;
+	background: #fff;
+	padding-left: 10px;
+}
