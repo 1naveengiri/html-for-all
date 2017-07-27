@@ -84,6 +84,41 @@ class Html_For_All_AdminSettings {
 	 *
 	 * @return html of setting page
 	 */
-	function hfa_settings_callback() {
-	}
+	function hfa_settings_callback() { 
+			if( isset( $_POST['hfa_save_post_types'] ) && !empty( $_POST['hfa_save_post_types'] )){
+				$selected_post_type = $_POST['hfa_post_types'];
+				update_option("hfa_selected_post_type", $selected_post_type);
+			}
+		?>
+		<div class='hfa_setting_containre'>
+			<div class="hfa_pluing_information">
+				<p class='hfa_info'></p>
+			</div>
+			<div class="hfa_setting_form">
+				<form method='post'>
+				<?php
+					$post_types = get_post_types();	    
+					$restricted_post_types = array('attachment', 'revision', 'nav_menu_item'); 
+					$post_types = array_diff( $post_types, $restricted_post_types);
+					if(!empty($post_types)){
+						$selected_post_type = get_option("hfa_selected_post_type");
+						echo "<ul  class='post_types_lists'>";
+						foreach ( $post_types as $post_type ){
+							$checked = '';
+							if( !empty( $selected_post_type ) && in_array($post_type, $selected_post_type )){
+								$checked = 'checked';
+							}
+							echo "<li>";
+								echo '<input type="checkbox" '.$checked.' name="hfa_post_types[ ]" value="'.$post_type.'">';
+								echo "<label>".$post_type."</Label>";
+							echo "</li>";
+						}		
+						echo '<li> <input type="submit" name="hfa_save_post_types" value="Save"> </li>';
+						echo "</ul>";
+					}
+				?>
+				</form>
+			</div>
+		</div>
+	<?php }
 }
