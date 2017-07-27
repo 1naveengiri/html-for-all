@@ -29,6 +29,7 @@ class Html_For_All_AdminSettings {
 	function __construct() {
 		add_filter( 'plugin_action_links_' . HFA_PLUGIN_BASENAME, array( $this, 'hfa_settings_page_link' ) );
 		add_action( 'admin_menu', array( $this, 'hfa_settings_plugin_menu' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'hfa_add_setting_style' ) );
 	}
 
 	/**
@@ -41,6 +42,13 @@ class Html_For_All_AdminSettings {
 			$instance = new Html_For_All_AdminSettings();
 		}
 		return SELF::$instance;
+	}
+
+	/**
+	 * Add style for setting form
+	 */
+	function hfa_add_setting_style(){
+		wp_enqueue_style( 'hfa_setting_style', plugins_url('style.css', __FILE__) );
 	}
 
 	/**
@@ -92,7 +100,7 @@ class Html_For_All_AdminSettings {
 		?>
 		<div class='hfa_setting_containre'>
 			<div class="hfa_pluing_information">
-				<p class='hfa_info'></p>
+				<p class='hfa_info update'> In terms of SEO and ranking, there is little benefit to keeping the .html extension present in your URLs. </p>
 			</div>
 			<div class="hfa_setting_form">
 				<form method='post'>
@@ -108,12 +116,14 @@ class Html_For_All_AdminSettings {
 							if( !empty( $selected_post_type ) && in_array($post_type, $selected_post_type )){
 								$checked = 'checked';
 							}
+							$post_type_name = strtoupper($post_type);
+							$post_type_name = str_replace('_', ' ', $post_type_name);
 							echo "<li>";
-								echo '<input type="checkbox" '.$checked.' name="hfa_post_types[ ]" value="'.$post_type.'">';
-								echo "<label>".$post_type."</Label>";
+								echo '<input type="checkbox" '.$checked.' name="hfa_post_types[ ]" value="' . $post_type . '">';
+								echo "<label>" . $post_type_name . "</Label>";
 							echo "</li>";
 						}		
-						echo '<li> <input type="submit" name="hfa_save_post_types" value="Save"> </li>';
+						echo '<li> <input type="submit" name="hfa_save_post_types" class="button  button-primary button-large" value="Save"> </li>';
 						echo "</ul>";
 					}
 				?>
