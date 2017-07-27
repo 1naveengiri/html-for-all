@@ -30,6 +30,9 @@ class Html_For_All {
 		add_filter( 'user_trailingslashit', array( $this, 'hfa_page_slash' ),66,2 );
 		add_filter( 'post_link', array( $this, 'post_link_callback' ),99,3 );
 		$this->selected_post_type = get_option("hfa_selected_post_type");
+		if( ! is_array( $this->selected_post_type ) ){
+			$this->selected_post_type = array( );
+		}
 		add_filter( 'redirect_canonical', '__return_false' );
 		add_action( 'rewrite_rules_array', array($this, 'hfa_rewrite_rules' )) ;
 		add_filter( 'post_type_link',array($this, 'hfa_custom_post_permalink' ), 10, 1 ); 
