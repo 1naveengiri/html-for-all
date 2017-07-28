@@ -4,4 +4,3 @@ This plugin provide a customizable option to change .html extension of all post 
 
 ## Add .html extension for all post, page, CTP ## 
 
-# :construction: Work in Progress Not yet completed
