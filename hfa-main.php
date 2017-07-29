@@ -3,7 +3,7 @@
  * Plugin Name: .html for all url
  * Description: Adds .html to post, pages, CPT in WordPress.
  * Author: buddydevelopers
- * Version: 1.0
+ * Version: 1.1
  * Author URI: http://www.buddydevelopers.com/
  *
  * @package HFA\Fronted
