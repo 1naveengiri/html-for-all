@@ -125,9 +125,11 @@ class Html_For_All {
 	 */
 	function post_link_callback( $permalink, $post, $leavename ) {
 		global $post;
-		$type = get_post_type( $post->ID );
-		if ( in_array( $type, $this->selected_post_type ) ) {
-			$permalink = home_url( $post->post_name . '.html' );
+		if( isset($post->ID ) && !empty( $post->ID )){
+			$type = get_post_type( $post->ID );
+			if ( in_array( $type, $this->selected_post_type ) ) {
+				$permalink = home_url( $post->post_name . '.html' );
+			}
 		}
 		return $permalink;
 	}
@@ -142,6 +144,8 @@ class Html_For_All {
 	function hfa_rewrite_rules( $rules ) {
 		$new_rules = array();
 		$post_types = get_post_types();
+		$except = array( 'attachment', 'page', 'revision', 'nav_menu_item' );
+		$post_types = array_diff( $post_types, $except );
 		foreach ( $post_types as $post_type ) {
 			if ( in_array( $post_type, $this->selected_post_type ) ) {
 				if ( 'post' === $post_type ) {
@@ -163,9 +167,11 @@ class Html_For_All {
 	 */
 	function hfa_custom_post_permalink( $post_link ) {
 		global $post;
-		$type = get_post_type( $post->ID );
-		if ( in_array( $type, $this->selected_post_type ) ) {
-			$post_link = home_url( $type . '/' . $post->post_name . '.html' );
+		if( isset($post->ID ) && !empty( $post->ID )){
+			$type = get_post_type( $post->ID );
+			if ( in_array( $type, $this->selected_post_type ) ) {
+				$post_link = home_url( $type . '/' . $post->post_name . '.html' );
+			}
 		}
 		return $post_link;
 	}

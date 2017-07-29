@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name: .html for all url
- * Plugin URI: http://www.buddydevelopers.com/
  * Description: Adds .html to post, pages, CPT in WordPress.
  * Author: buddydevelopers
  * Version: 1.0

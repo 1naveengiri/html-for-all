@@ -1,8 +1,8 @@
-=== .html in url ===
-Contributors: 1naveengiri
+=== .html for all url ===
+Contributors: 1naveengiri, buddydevelopers
 Donate link: http://buddydevelopers.com/
 Tags: Adds .html to pages, .html to post, .html to custom post type, .html to CPT, .html to url, .html to pages, .html to permalink, change permalink structure, html in my url, .html in my url, .html for all url, .html in wordpress
-Requires at least: 1.0
+Requires at least: 4.5
 Tested up to: 4.8
 Stable tag: .html to url,.html to pages, .html to post, .html to custom post type, .html to CPT, .html to permalink, change permalink structure, html in my url, 
 License: GPLv2 or later
@@ -33,7 +33,7 @@ Go to settings->.permalink and update it.
 
 == Installation ==
 
-1) Upload `html-in-url` to the `/wp-content/plugins/` directory
+1) Upload `html-for-all-url` to the `/wp-content/plugins/` directory
 
 2) Activate the plugin  
 
@@ -50,22 +50,35 @@ Enjoy the feature of 1st version and support with your review and rating.
  
 == Frequently asked questions ==
 
-= A question that someone might have =
+= is it compatible with WordPress 4.7? =
 
-An answer to that question.
-  
+Yes, It is Tested and compatible for WordPress 4.5 <  greater versions.
+
+= can we change category archive link with .html at the end? =
+
+No, Still this feature is not included in this plugin. 
+
+== Screenshots ==
+
+1. Setting tab for .html for all by BuddyDeveloper[http://buddydevelopers.com]
+2. Setting screen of .html for all post, page, custom post type 
+
 == Changelog ==
 
-= 1.0 =
+= 1.0 [July 28, 2017]  =
 * Allow to manage and change post, page, custom post type url. 
 * Provide a handle in setting to enable and disable .html for different custom post type.
-  
 
+= 1.1 [July 29, 2017] =
+
+* FIXED
+
+ * Warnings on add new page screen
+ * Issue with URL not found for new pages.
+
+  
 == Upgrade Notice ==
  
 
-= 1.0 = 
-crate html in post, page, custom post type url.  
-
-
- 
+= 1.1 =
+.html for all url 1.1, Minor release which fixes issues with 404 for new pages.
