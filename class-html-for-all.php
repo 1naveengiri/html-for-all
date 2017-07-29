@@ -37,13 +37,12 @@ class Html_For_All {
 		register_activation_hook( __FILE__, array( $this, 'hfa_active' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'hfa_deactive' ) );
 		add_filter( 'user_trailingslashit', array( $this, 'hfa_page_slash' ),66,2 );
-		add_filter( 'post_link', array( $this, 'post_link_callback' ),99,3 );
 		$this->selected_post_type = get_option( 'hfa_selected_post_type' );
 		if ( ! is_array( $this->selected_post_type ) ) {
 			$this->selected_post_type = array();
 		}
 		add_filter( 'redirect_canonical', '__return_false' );
-		add_action( 'rewrite_rules_array', array( $this, 'hfa_rewrite_rules' ) );
+		add_filter( 'rewrite_rules_array', array( $this, 'hfa_rewrite_rules' ) );
 		add_filter( 'post_type_link',array( $this, 'hfa_custom_post_permalink' ), 10, 1 );
 	}
 
@@ -67,6 +66,17 @@ class Html_For_All {
 		if ( in_array( 'page', $this->selected_post_type ) ) {
 			if ( ! strpos( $wp_rewrite->get_page_permastruct(), '.html' ) ) {
 				$wp_rewrite->page_structure = $wp_rewrite->page_structure . '.html';
+			}
+			$permalink_structure = get_option( 'permalink_structure' );
+			if( !empty($permalink_structure) ){
+				$permalink_structure = explode('/', $permalink_structure);
+				$total_element = count( $permalink_structure );
+				if( isset($permalink_structure[ $total_element - 1] ) && empty( $permalink_structure[ $total_element - 1]  )){
+					unset( $permalink_structure[ $total_element - 1] );
+					$permalink_structure = implode('/', $permalink_structure);
+					$permalink_structure .= '.html';
+					update_option('permalink_structure', $permalink_structure);
+				}
 			}
 			$wp_rewrite->flush_rules();
 		}
@@ -115,26 +125,6 @@ class Html_For_All {
 	}
 
 	/**
-	 * Add .html in post URL.
-	 *
-	 * @param  string $permalink Post permalink structure.
-	 * @param  array  $post Post array.
-	 * @param  bool   $leavename Whether to keep the post name.
-	 *
-	 * @return  string $new_permalink New permalink structure for post with .html at the end.
-	 */
-	function post_link_callback( $permalink, $post, $leavename ) {
-		global $post;
-		if( isset($post->ID ) && !empty( $post->ID )){
-			$type = get_post_type( $post->ID );
-			if ( in_array( $type, $this->selected_post_type ) ) {
-				$permalink = home_url( $post->post_name . '.html' );
-			}
-		}
-		return $permalink;
-	}
-
-	/**
 	 * Add rewrite rules for all post, CPT
 	 *
 	 * @param  array $rules Rules defined for post URL.
@@ -143,19 +133,16 @@ class Html_For_All {
 	 */
 	function hfa_rewrite_rules( $rules ) {
 		$new_rules = array();
-		$post_types = get_post_types();
-		$except = array( 'attachment', 'page', 'revision', 'nav_menu_item' );
-		$post_types = array_diff( $post_types, $except );
-		foreach ( $post_types as $post_type ) {
-			if ( in_array( $post_type, $this->selected_post_type ) ) {
-				if ( 'post' === $post_type ) {
-					$new_rules['([^/]+)\.html$'] = 'index.php?post_type=' . $post_type . '&name=$matches[1]';
-				} else {
-					$new_rules[ $post_type . '/([^/]+)\.html$' ] = 'index.php?post_type=' . $post_type . '&name=$matches[1]';
-				}
+		if( isset( $this->selected_post_type ) && !empty( $this->selected_post_type ) ){
+			$post_type_array = $this->selected_post_type;
+			$exclude = array( 'page', 'post' );
+			$post_types = array_diff( $post_type_array, $exclude );
+			foreach ( $post_types as $key => $value ) {
+				$new_rules[ $value . '/([^/]+)\.html$' ] = 'index.php?post_type=' . $value . '&name=$matches[1]';
 			}
 		}
-		return $new_rules + $rules;
+		$new_rules = $new_rules + $rules;
+		return $new_rules;
 	}
 
 	/**
@@ -168,9 +155,14 @@ class Html_For_All {
 	function hfa_custom_post_permalink( $post_link ) {
 		global $post;
 		if( isset($post->ID ) && !empty( $post->ID )){
-			$type = get_post_type( $post->ID );
-			if ( in_array( $type, $this->selected_post_type ) ) {
-				$post_link = home_url( $type . '/' . $post->post_name . '.html' );
+			if( isset( $this->selected_post_type ) && !empty( $this->selected_post_type ) ){
+				$post_type_array = $this->selected_post_type;
+				$type = get_post_type( $post->ID );
+				$exclude = array( 'page', 'post' );
+				$post_types = array_diff( $post_type_array, $exclude );
+				if ( in_array( $type, $post_types ) ) {
+					$post_link = home_url( $type . '/' . $post->post_name . '.html' );
+				}
 			}
 		}
 		return $post_link;

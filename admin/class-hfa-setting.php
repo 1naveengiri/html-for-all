@@ -107,9 +107,13 @@ class Html_For_All_AdminSettings {
 			<div class="hfa_setting_form">
 				<form method='post'>
 				<?php
-					$post_types = get_post_types();
-					$restricted_post_types = array( 'attachment', 'revision', 'nav_menu_item' );
-					$post_types = array_diff( $post_types, $restricted_post_types );
+					$args = array(
+					   'public'   => true,
+					   '_builtin' => false
+					);
+					$post_types = get_post_types( $args );
+					$restricted_post_types = array( 'post', 'page');
+					$post_types = array_merge( $restricted_post_types, $post_types );
 				if ( ! empty( $post_types ) ) {
 					$selected_post_type = get_option( 'hfa_selected_post_type' );
 					echo "<ul  class='post_types_lists'>";
