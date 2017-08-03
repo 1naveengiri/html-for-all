@@ -76,9 +76,14 @@ No, Still this feature is not included in this plugin.
  * Warnings on add new page screen
  * Issue with URL not found for new pages.
 
+ = 1.2 [August 3, 2017] =
+
+* FIXED
+
+ * Fixed issue for post Permalink
   
 == Upgrade Notice ==
  
 
 = 1.1 =
-.html for all url 1.1, Minor release which fixes issues with 404 for new pages.
+.html for all url 1.2, Minor release which fixes issues post permalink.
