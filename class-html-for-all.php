@@ -67,8 +67,8 @@ class Html_For_All {
 			if ( ! strpos( $wp_rewrite->get_page_permastruct(), '.html' ) ) {
 				$wp_rewrite->page_structure = $wp_rewrite->page_structure . '.html';
 			}
-			$wp_rewrite->flush_rules();
 		}
+		$wp_rewrite->flush_rules();
 	}
 
 	/**
