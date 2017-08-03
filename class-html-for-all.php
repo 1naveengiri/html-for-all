@@ -67,17 +67,6 @@ class Html_For_All {
 			if ( ! strpos( $wp_rewrite->get_page_permastruct(), '.html' ) ) {
 				$wp_rewrite->page_structure = $wp_rewrite->page_structure . '.html';
 			}
-			$permalink_structure = get_option( 'permalink_structure' );
-			if( !empty($permalink_structure) ){
-				$permalink_structure = explode('/', $permalink_structure);
-				$total_element = count( $permalink_structure );
-				if( isset($permalink_structure[ $total_element - 1] ) && empty( $permalink_structure[ $total_element - 1]  )){
-					unset( $permalink_structure[ $total_element - 1] );
-					$permalink_structure = implode('/', $permalink_structure);
-					$permalink_structure .= '.html';
-					update_option('permalink_structure', $permalink_structure);
-				}
-			}
 			$wp_rewrite->flush_rules();
 		}
 	}
@@ -133,7 +122,7 @@ class Html_For_All {
 	 */
 	function hfa_rewrite_rules( $rules ) {
 		$new_rules = array();
-		if( isset( $this->selected_post_type ) && !empty( $this->selected_post_type ) ){
+		if ( isset( $this->selected_post_type ) && ! empty( $this->selected_post_type ) ) {
 			$post_type_array = $this->selected_post_type;
 			$exclude = array( 'page', 'post' );
 			$post_types = array_diff( $post_type_array, $exclude );
@@ -154,8 +143,8 @@ class Html_For_All {
 	 */
 	function hfa_custom_post_permalink( $post_link ) {
 		global $post;
-		if( isset($post->ID ) && !empty( $post->ID )){
-			if( isset( $this->selected_post_type ) && !empty( $this->selected_post_type ) ){
+		if ( isset( $post->ID ) && ! empty( $post->ID ) ) {
+			if ( isset( $this->selected_post_type ) && ! empty( $this->selected_post_type ) ) {
 				$post_type_array = $this->selected_post_type;
 				$type = get_post_type( $post->ID );
 				$exclude = array( 'page', 'post' );

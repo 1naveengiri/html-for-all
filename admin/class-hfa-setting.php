@@ -96,7 +96,29 @@ class Html_For_All_AdminSettings {
 			$selected_post_type = array();
 			if ( isset( $_POST['hfa_post_types'] )  && ! empty( $_POST['hfa_post_types'] ) ) {
 				$selected_post_type = wp_unslash( $_POST['hfa_post_types'] );
+				global $wp_rewrite;
+				if ( in_array( 'post', $_POST['hfa_post_types'] ) ) {
+					$permalink_structure = get_option( 'permalink_structure' );
+					if ( ! empty( $permalink_structure ) ) {
+						update_option( 'old_permalink_structure', $permalink_structure );
+						$permalink_structure = explode( '/', $permalink_structure );
+						$total_element = count( $permalink_structure );
+						if ( isset( $permalink_structure[ $total_element - 1 ] ) && empty( $permalink_structure[ $total_element - 1 ] ) ) {
+							unset( $permalink_structure[ $total_element - 1 ] );
+							$permalink_structure = implode( '/', $permalink_structure );
+							$permalink_structure .= '.html';
+							update_option( 'permalink_structure', $permalink_structure );
+						}
+					}
+				} else {
+					$old_permalink_structure = get_option( 'old_permalink_structure' );
+					if ( ! empty( $old_permalink_structure ) ) {
+						update_option( 'permalink_structure', $old_permalink_structure );
+					}
+				}
+				$wp_rewrite->flush_rules();
 			}
+
 			update_option( 'hfa_selected_post_type', $selected_post_type );
 		}
 		?>
@@ -109,10 +131,10 @@ class Html_For_All_AdminSettings {
 				<?php
 					$args = array(
 					   'public'   => true,
-					   '_builtin' => false
+					   '_builtin' => false,
 					);
 					$post_types = get_post_types( $args );
-					$restricted_post_types = array( 'post', 'page');
+					$restricted_post_types = array( 'post', 'page' );
 					$post_types = array_merge( $restricted_post_types, $post_types );
 				if ( ! empty( $post_types ) ) {
 					$selected_post_type = get_option( 'hfa_selected_post_type' );
