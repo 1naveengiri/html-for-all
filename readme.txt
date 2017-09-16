@@ -58,6 +58,9 @@ Yes, It is Tested and compatible for WordPress 4.5 <  greater versions.
 
 No, Still this feature is not included in this plugin. 
 
+== Demo ==
+ https://www.youtube.com/watch?v=k4FzgxeYu2g
+ 
 == Screenshots ==
 
 1. Setting tab for .html for all by BuddyDeveloper[http://buddydevelopers.com]
