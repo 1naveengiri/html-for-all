@@ -150,7 +150,7 @@ class Html_For_All {
 				$exclude = array( 'page', 'post' );
 				$post_types = array_diff( $post_type_array, $exclude );
 				if ( in_array( $type, $post_types ) ) {
-					$post_link = home_url( $type . '/' . $post->post_name . '.html' );
+					$post_link = home_url( $type . '/%postname%.html' );
 				}
 			}
 		}
