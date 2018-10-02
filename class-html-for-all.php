@@ -32,7 +32,7 @@ class Html_For_All {
 	/**
 	 * __construct Html_For_All class constructor
 	 */
-	function __construct() {
+	public function __construct() {
 		add_action( 'init', array( $this, 'hfa_page_permalink' ), -1 );
 		register_activation_hook( __FILE__, array( $this, 'hfa_active' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'hfa_deactive' ) );
@@ -61,7 +61,7 @@ class Html_For_All {
 	/**
 	 * Function to add .html at the end of file.
 	 */
-	function hfa_page_permalink() {
+	public function hfa_page_permalink() {
 		global $wp_rewrite;
 		if ( in_array( 'page', $this->selected_post_type ) ) {
 			if ( ! strpos( $wp_rewrite->get_page_permastruct(), '.html' ) ) {
@@ -79,7 +79,7 @@ class Html_For_All {
 	 *
 	 * @return string  $string   Adds/removes a trailing slash based on the permalink structure
 	 */
-	function hfa_page_slash( $string, $type ) {
+	public function hfa_page_slash( $string, $type ) {
 		global $wp_rewrite;
 		if ( in_array( $type, $this->selected_post_type ) ) {
 			if ( $wp_rewrite->using_permalinks() && true === $wp_rewrite->use_trailing_slashes && 'page' === $type ) {
@@ -92,7 +92,7 @@ class Html_For_All {
 	/**
 	 * Function to get call when Plugin get activated
 	 */
-	function hfa_active() {
+	public function hfa_active() {
 		global $wp_rewrite;
 		if ( in_array( 'page', $this->selected_post_type ) ) {
 			if ( ! strpos( $wp_rewrite->get_page_permastruct(), '.html' ) ) {
@@ -105,7 +105,7 @@ class Html_For_All {
 	/**
 	 * Function to get call when Plug in get deactivated
 	 */
-	function hfa_deactive() {
+	public function hfa_deactive() {
 		global $wp_rewrite;
 		if ( in_array( 'page', $this->selected_post_type ) ) {
 			$wp_rewrite->page_structure = str_replace( '.html','',$wp_rewrite->page_structure );
@@ -120,7 +120,7 @@ class Html_For_All {
 	 *
 	 * @return  array $new_rules New rules defined for post and custom post with .html extension.
 	 */
-	function hfa_rewrite_rules( $rules ) {
+	public function hfa_rewrite_rules( $rules ) {
 		$new_rules = array();
 		if ( isset( $this->selected_post_type ) && ! empty( $this->selected_post_type ) ) {
 			$post_type_array = $this->selected_post_type;
@@ -141,7 +141,7 @@ class Html_For_All {
 	 *
 	 * @return  string $post_link New permalink structure for post with .html at the end.
 	 */
-	function hfa_custom_post_permalink( $post_link ) {
+	public function hfa_custom_post_permalink( $post_link ) {
 		global $post;
 		if ( isset( $post->ID ) && ! empty( $post->ID ) ) {
 			if ( isset( $this->selected_post_type ) && ! empty( $this->selected_post_type ) ) {
